@@ -1,2 +1,3 @@
 my max int = 2147483647
 my min int = -2147483648
+MinValue = -2147483648

@@ -9,5 +9,7 @@ class maeps{
 		int j = -1;
 		while(j-1<j) {j--;}
 		Console.WriteLine("my min int = {0}", j);
+
+		Console.WriteLine("MinValue = {0}", int.MinValue);
 	} 
 }
