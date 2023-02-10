@@ -1,5 +1,12 @@
-class hello{
-	static void Main(){
-		System.Console.Write("hello\n");
+using System;
+
+class first {
+
+	static void Main()
+	{
+		double e = Math.E;
+		Console.WriteLine("Math.E = " + e);
+
+
 	}
 }
