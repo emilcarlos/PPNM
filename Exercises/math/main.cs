@@ -4,8 +4,8 @@ class first {
 
 	static void Main()
 	{
-		double e = Math.E;
-		Console.WriteLine("Math.E = " + e);
+		double square = Math.Sqrt(2);
+		Console.WriteLine("Math.E = " + square);
 
 
 	}
