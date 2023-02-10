@@ -16,5 +16,8 @@ class first {
 		double pi_e = Math.Pow(Math.PI, Math.E);
 		Console.WriteLine("pi to the power of e = " + pi_e);
 
+                double gam_one = sfuns.prime.gamma(1.0);
+                Console.WriteLine("gamma(1.0) = " + gam_one);
+
 	}
 }
