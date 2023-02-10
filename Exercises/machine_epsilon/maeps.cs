@@ -23,6 +23,6 @@ class maeps{
 		Console.WriteLine("machine epsilon for double = " + x);
 		Console.WriteLine("machine epsilon for float " + y);
 		Console.WriteLine("check for double = " + check_double);
-		Console.WriteLine("check for float = ", + check_float);
+		Console.WriteLine("check for float = " + check_float);
 	} 
 }
