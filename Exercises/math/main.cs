@@ -19,5 +19,14 @@ class first {
                 double gam_one = sfuns.prime.gamma(1.0);
                 Console.WriteLine("gamma(1.0) = " + gam_one);
 
+		double gam_two = sfuns.prime.gamma(2.0);
+		Console.WriteLine("gamma(2.0) = " + gam_two);
+
+		double gam_three = sfuns.prime.gamma(3.0);
+		Console.WriteLine("gamma(3.0) = " + gam_three);
+
+		double gam_ten = sfuns.prime.gamma(10.0);
+		Console.WriteLine("gamma(10.0) = " + gam_ten);
+
 	}
 }
