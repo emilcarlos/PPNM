@@ -1,3 +1,7 @@
 my max int = 2147483647
 my min int = -2147483648
 MinValue = -2147483648
+machine epsilon for double = 2.22044604925031E-16
+machine epsilon for float 1.192093E-07
+check for double = 2.22044604925031E-16
+check for float = 
