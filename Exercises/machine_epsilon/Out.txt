@@ -5,3 +5,12 @@ machine epsilon for double = 2.22044604925031E-16
 machine epsilon for float 1.192093E-07
 check for double = 2.22044604925031E-16
 check for float = 1.19209289550781E-07
+Opgave 3
+sumA-1 = 0.000000e+000 should be 1.110223e-010
+sumB-1 = 1.110223e-010 should be 1.110223e-010
+The two numbers are different, because tiny is less than the machine epsilon. 1 + tiny will still be 1. Therefore sumA will end up as 1. SumB on the other hand will end up as n * tiny plus 1 since n * tiny is larger than the machine epsilon.
+Opgave 4
+d1=7.999999999999999e-001
+d2=8.000000000000000e-001
+d1==d2 ? => False
+approx(d1,d2)? => True
