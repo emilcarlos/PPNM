@@ -1,9 +1,9 @@
 
-out.txt: main.exe Makefile
+out.txt: main.exe
 	mono main.exe > out.txt
 	
 main.exe: main.cs
-	mcs main.cs -target:exe -out:main.exe
+	mcs main.cs -target:exe -out:$@
 
 clean:
-	rm --force main.exe
+	$(RM) *.exe *.dll [Oo]ut* log*
