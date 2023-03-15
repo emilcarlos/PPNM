@@ -8,3 +8,6 @@ matrix.dll : $(DIR)/vector.cs $(DIR)/matrix.cs
 
 main.exe: main.cs matrix.dll
 	mcs -reference:matrix.dll main.cs
+
+clean: 
+	rm -rf *.txt *.exe
