@@ -4,7 +4,13 @@ CODE = $(filter %.cs,$^)
 Gamma.svg : gamma.gpi gamma.data factorials.data
 	gnuplot $<
 
+Erf.svg : erf.gpi erf.data factorials.data
+	gnuplot $<
+
 gamma.data : main.exe
+	mono $< > $@
+
+erf.data : main.exe
 	mono $< > $@
 
 main.exe : main.cs sfuns.dll
