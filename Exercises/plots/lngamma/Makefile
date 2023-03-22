@@ -1,27 +1,27 @@
 DLLS = $(addprefix -reference:,$(filter %.dll,$^))
 CODE = $(filter %.cs,$^)
 
-function.svg : function.gpi function.data factorials.data
+Gamma.svg : gamma.gpi gamma.data factorials.data
 	gnuplot $<
 
-function.data : main.exe
+gamma.data : main.exe
 	mono $< > $@
 
 main.exe : main.cs sfuns.dll
 	mcs -target:exe -out:$@ $(CODE) $(DLLS)
 
-sfuns.dll : gamma.cs erf.cs
+sfuns.dll : gamma.cs
 	mcs -target:library -out:$@ $(CODE)
 
 factorials.data : Makefile
 	>$@
-	echo 0 1 >>$@
-	echo 1 1 >>$@
-	echo 2 2 >>$@
-	echo 3 6 >>$@
-	echo 4 24 >>$@
-	echo 5 120 >>$@
-	echo 6 720 >>$@
+	echo 2.5 0.284 >>$@
+	echo 3.5 1.201 >>$@
+	echo 0.5 0.572 >>$@
+	echo 1.5 -0.121 >>$@
+	echo 1.0 0 >>$@
+	echo 2.0 0 >>$@
+	echo 3.0 0.693 >>$@
 
 main: main.exe sfuns.dll
 	mkbundle -o $@ --simple $^

@@ -1,0 +1,15 @@
+set terminal svg
+set key bottom right
+set output "Gamma.svg"
+set xlabel "x"
+set ylabel "y"
+set tics in
+set xzeroaxis
+set xrange [0:5]
+set yzeroaxis
+set yrange[-1:5]
+
+set samples 800
+set title "Gamma function"
+plot "gamma.data" with lines lt 1 lc "red" lw 3 title "theory" \
+,"factorials.data" with points pointtype 4 title "experiment" \
