@@ -8,6 +8,7 @@ set xzeroaxis
 set yzeroaxis
 set samples 800
 set title "Gamma function"
+set terminal svg background "white"
 plot [-5:5][-5:5] \
  "gamma.data" with lines linetype 1 title "theory" \
 ,"factorials.data" using ($1+1):($2) with points pointtype 4 title "experiment" \
