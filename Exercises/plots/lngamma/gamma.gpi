@@ -10,6 +10,6 @@ set yzeroaxis
 set yrange[-1:5]
 
 set samples 800
-set title "Gamma function"
+set title "ln(gamma) function"
 plot "gamma.data" with lines lt 1 lc "red" lw 3 title "theory" \
 ,"factorials.data" with points pointtype 4 title "experiment" \
