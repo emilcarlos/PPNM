@@ -1,4 +1,4 @@
-set terminal svg
+set terminal svg background "white"
 set key bottom right
 set output "Gamma.svg"
 set xlabel "x"
