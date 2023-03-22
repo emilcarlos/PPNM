@@ -1,6 +1,6 @@
 set terminal svg
 set key bottom right
-set output "Gamma.svg"
+set output "function.svg"
 set xlabel "x"
 set ylabel "y"
 set tics out
