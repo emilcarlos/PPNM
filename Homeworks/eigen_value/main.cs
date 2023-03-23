@@ -3,7 +3,7 @@ using static System.Console;
 using static System.Random;
 using static System.Math;
 
-class main{
+public class main{
 	public static class jacobi{
 		public static void timesJ(matrix A, int p, int q, double theta){
 			double c = Cos(theta), s = Sin(theta);
@@ -23,9 +23,10 @@ class main{
 			}
 		}
 
-		public static (matrix, matrix) cyclic(matrix M){
+		public static (matrix, matrix, vector) cyclic(matrix M){
 			matrix A = M.copy();
 			matrix V = matrix.id(M.size1);
+			vector w = new vector(M.size1);
 			int n = M.size1;
 			bool changed;
 			do{
@@ -47,14 +48,17 @@ class main{
 				}
 			}while(changed);
 			matrix D = A.copy();
-			return (D, V);
+			for(int i=0;i<M.size1;i++){
+				w[i] = D[i,i];
+			}
+			return (D, V, w);
 		}
 	}
 
-	static void Main(){
+	public static void Main(string[] args){
 		// random symmetric matrix A
 		var random = new Random();
-		int random_n = random.Next(2,8);
+		int random_n = random.Next(2,10);
 		matrix random_A = new matrix(random_n, random_n);
 		for(int i=0;i<random_n;i++){
 		for(int j=i;j<random_n;j++){
@@ -72,9 +76,10 @@ class main{
 		matrix D = jacobi.cyclic(random_A).Item1;
 
 		// Checks
-		random_A.print("Random symmetric matrix A:");
-		D.print("D:");
-		V.print("V:");
+		//random_A.print("Random symmetric matrix A:");
+		//D.print("D:");
+		//V.print("V:");
+		WriteLine($"A is a {random_n}x{random_n} symmetric matrix.");
 
 		matrix VAV = V.T*random_A*V;
 		matrix VDV = V*D*V.T;
@@ -92,6 +97,46 @@ class main{
 
 		if(VVT.approx(ID)){WriteLine("V*V^T equals identity matrix.");}
 		else{WriteLine("V*V^T does not equal identity matrix.");}
+		
 
+		//Task B
+		double rmax = 0;
+		double dr = 0;
+		foreach(var arg in args){
+			var words = arg.Split(":");
+			if(words[0]=="-rmax"){
+				rmax = double.Parse(words[1]);
+			}
+			if(words[0]=="-dr"){
+				dr = double.Parse(words[1]);
+			}
+		}
+
+		WriteLine($"{rmax} {dr}");
+
+		int npoints = (int)(rmax/dr)-1;
+
+		vector r = new vector(npoints);
+		for(int i=0;i<npoints;i++)r[i]=dr*(i+1);
+
+		matrix H = new matrix(npoints,npoints);
+		for(int i=0;i<npoints-1;i++){
+   		H[i,i]  =-2;
+  		H[i,i+1]= 1;
+   		H[i+1,i]= 1;
+  		}
+
+		H[npoints-1,npoints-1]=-2;
+		matrix.scale(H,-0.5/dr/dr);
+		for(int i=0;i<npoints;i++)H[i,i]+=-1/r[i];
+		
+		//eigen
+		vector values = jacobi.cyclic(H).Item3;
+		matrix vectors = jacobi.cyclic(H).Item2;
+		
+		double min_val = values[0];
+		vector min_vector = vectors[0];
+		
+		
 	}
 }
