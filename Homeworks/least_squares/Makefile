@@ -3,11 +3,17 @@ CODE = $(filter %.cs,$^)
 
 DIR = $(HOME)/PPNM/matlib/matrix
 
+All : fit.svg Out.txt
+	mv -t outputs $^
+
 fit.svg : fit.gpi fit.data exp.data
 	gnuplot $<
 
 fit.data : main.exe
-	mono $< > $@
+	mono $< plot > $@
+
+Out.txt : main.exe
+	mono $< halflife > $@
 
 matrix.dll : $(DIR)/vector.cs $(DIR)/matrix.cs
 	mcs -target:library -out:./matrix.dll $^
@@ -31,4 +37,4 @@ main : main.exe matrix.dll
 	mkbundle -o $@ --simple $^
 
 clean: 
-	$(RM) *.exe *.dll *.svg *.data main
+	$(RM) *.exe *.dll *.svg *.data *.txt main

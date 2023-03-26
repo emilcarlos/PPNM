@@ -77,7 +77,7 @@ class main{
 	}
 
 
-	static void Main(){
+	static void Main(string[] args){
 		// TASK A
 		//WriteLine("TASK A");
 
@@ -107,29 +107,7 @@ class main{
 			random_v[i] = random.NextDouble();
 		}
 
-		//check that decomp is working
-		matrix a = random_a.copy();
-		matrix r = new matrix(random_m, random_m);
-		QRGS.decomp(a, r);
-		//matrix check1 = a.T*a;
-		//matrix check2 = a*r;
-                //WriteLine("Check status:");
-                r.set_unity();
-                //if(check1.approx(r)){
-                //        WriteLine("Q_transpose * Q equals identity matrix.");
-                //}
-                //else{
-                //        WriteLine("Q_transpose * Q does not equal identity matrix");
-                //}
-                //if(random_a.approx(check2)){
-                //        WriteLine("QR is identical with original A.");
-                //}
-                //else{
-			//WriteLine("QR is not equal to original A.");
-//		}
-		//WriteLine("");
-		
-		//Task
+		//Performing fit
 		var fs = new Func<double,double>[] {z => 1, z => z};
 		vector t = new vector("1,2,3,4,6,9,10,13,15");
 		vector y = new vector("117,100,88,72,53,29.5,25.2,15.2,11.1");
@@ -143,8 +121,47 @@ class main{
 		vector bf = ls.lsfit(fs, t, ln_y, ln_dy);
 		double c_a = Math.Exp(bf[0]);
 		double c_lamda = -bf[1];
-		for(double x=0.01+1.0/128;x<=15;x+=1.0/64){
-			WriteLine($"{x} {c_a*Math.Exp(-c_lamda*x)}");
+
+		foreach(var arg in args){
+			if(arg == "plot"){
+				//generate data for plotting the fit 
+				for(double x=0.01+1.0/128;x<=15;x+=1.0/64){
+					WriteLine($"{x} {c_a*Math.Exp(-c_lamda*x)}");
+				}
+			}
+			if(arg == "halflife"){
+				//check that decomp is working
+
+                		matrix a = random_a.copy();
+                		matrix r = new matrix(random_m, random_m);
+                		QRGS.decomp(a, r);
+                		matrix check1 = a.T*a;
+                		matrix check2 = a*r;
+                		WriteLine("Decomp check");
+                		r.set_unity();
+                		if(check1.approx(r)){
+                        		WriteLine("Q_transpose * Q equals identity matrix.");
+                		}
+                		else{
+                        		WriteLine("Q_transpose * Q does not equal identity matrix");
+                		}
+                		if(random_a.approx(check2)){
+                        		WriteLine("QR is identical with original A.");
+                		}
+                		else{
+                        		WriteLine("QR is not equal to original A.");
+                		}
+                		WriteLine("");
+
+				//compare half-lifes
+				WriteLine("Comparison of half-life");
+				double val_theory = 3.631;
+				double val_exp = Math.Log(2)/c_lamda;
+				double deviation = 100*((val_exp-val_theory)/val_theory);
+			       	WriteLine($"Experimental half-life: {val_exp}");
+				WriteLine($"Theoretical half-life: {val_theory}");
+				WriteLine($"Deviation from theory: {deviation} %");	
+			}
 		}
 	}
 }
