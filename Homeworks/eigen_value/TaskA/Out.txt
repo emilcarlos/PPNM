@@ -1,6 +1,5 @@
-A is a 2x2 symmetric matrix.
+A is a 183x183 symmetric matrix.
 V^T*A*V equals D.
 V*D*V^T equals A.
 V^T*V equals identity matrix.
 V*V^T equals identity matrix.
-10 0.3

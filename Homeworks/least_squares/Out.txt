@@ -1,0 +1,6 @@
+TASK A
+Check status:
+Q_transpose * Q equals identity matrix.
+QR is identical with original A.
+
+Best fit:       4.95      -0.17 

@@ -55,10 +55,10 @@ public class main{
 		}
 	}
 
-	public static void Main(string[] args){
+	public static void Main(){
 		// random symmetric matrix A
 		var random = new Random();
-		int random_n = random.Next(2,10);
+		int random_n = random.Next(2,200);
 		matrix random_A = new matrix(random_n, random_n);
 		for(int i=0;i<random_n;i++){
 		for(int j=i;j<random_n;j++){
@@ -97,46 +97,5 @@ public class main{
 
 		if(VVT.approx(ID)){WriteLine("V*V^T equals identity matrix.");}
 		else{WriteLine("V*V^T does not equal identity matrix.");}
-		
-
-		//Task B
-		double rmax = 0;
-		double dr = 0;
-		foreach(var arg in args){
-			var words = arg.Split(":");
-			if(words[0]=="-rmax"){
-				rmax = double.Parse(words[1]);
-			}
-			if(words[0]=="-dr"){
-				dr = double.Parse(words[1]);
-			}
-		}
-
-		WriteLine($"{rmax} {dr}");
-
-		int npoints = (int)(rmax/dr)-1;
-
-		vector r = new vector(npoints);
-		for(int i=0;i<npoints;i++)r[i]=dr*(i+1);
-
-		matrix H = new matrix(npoints,npoints);
-		for(int i=0;i<npoints-1;i++){
-   		H[i,i]  =-2;
-  		H[i,i+1]= 1;
-   		H[i+1,i]= 1;
-  		}
-
-		H[npoints-1,npoints-1]=-2;
-		matrix.scale(H,-0.5/dr/dr);
-		for(int i=0;i<npoints;i++)H[i,i]+=-1/r[i];
-		
-		//eigen
-		vector values = jacobi.cyclic(H).Item3;
-		matrix vectors = jacobi.cyclic(H).Item2;
-		
-		double min_val = values[0];
-		vector min_vector = vectors[0];
-		
-		
 	}
 }

@@ -1,6 +1,6 @@
 DIR = $(HOME)/PPNM/matlib/matrix
 
-aut.txt: main.exe
+Out.txt: main.exe
 	mono main.exe -rmax:10 -dr:0.3 > Out.txt
 
 matrix.dll : $(DIR)/vector.cs $(DIR)/matrix.cs

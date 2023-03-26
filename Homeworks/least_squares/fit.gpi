@@ -1,0 +1,13 @@
+set terminal svg
+set key top right
+set output "fit.svg"
+set xlabel "Time (days)"
+set ylabel "Activity (relative units)"
+set tics in
+set xzeroaxis
+set yzeroaxis
+set samples 800
+set title "Exponential fit using least-squares method"
+plot [0:16][0:150] \
+ "fit.data" with lines linetype 1 title "theory" \
+,"exp.data" with yerrorbars pointtype 4 title "experiment"\
