@@ -1,0 +1,19 @@
+set terminal svg background "white"
+set key top right
+set output "liniar.svg"
+set xlabel "x"
+set ylabel "y"
+set tics in
+set xzeroaxis
+set yzeroaxis
+set multiplot layout 2,1 rowsfirst
+set samples 800
+set title "Liniar interpolation"
+plot [0:15][0:9] \
+ "liniar.data" with lines linetype 1 title "interpolation" \
+,"points.data" with points pointtype 2 title "points"\
+
+set title "Integration from x[0]"
+plot [0:15][0:50] \
+"integral.data" with lines linetype 1 title "integration from x[0] to x"
+unset multiplot
