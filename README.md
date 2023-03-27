@@ -7,8 +7,8 @@ This is my repository used to store solutions to exercises and homeworks for the
 ---------------------------------------
 | 2  | EVD           | 6 | - | - |  6  |
 ---------------------------------------
-| 3  | LeastSquares  | 6 | - | - |  6  |
+| 3  | LeastSquares  | 6 | 3 | - |  6  |
 ---------------------------------------
 |              ...                     |
  ======================================
-|                    total points: 21  |
+|                    total points: 24  |
