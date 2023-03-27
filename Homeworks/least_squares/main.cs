@@ -54,32 +54,40 @@ class main{
 	}
 
 	public static class ls{
-		public static vector lsfit(Func<double,double>[] fs, vector x, vector y, vector dy){
-			int count_f = 0;
-			foreach(var f in fs){
-				count_f += 1;
-			}
-			matrix A = new matrix(x.size, count_f);
+		public static (vector, matrix, vector) lsfit(Func<double,double>[] fs, vector x, vector y, vector dy){
+			int l = fs.Length;
+			matrix A = new matrix(x.size, l);
 			vector b = y.copy();
-			
+			matrix R = new matrix(l, l);
+
 			for(int i=0;i<A.size1;i++){
 				for(int j=0;j<A.size2;j++){
-					A[i,j] = fs[j](x[i])/dy[i]; //fs[j](x[i])
+					A[i,j] = fs[j](x[i])/dy[i];
 				}
 				b[i] = y[i]/dy[i];
 			}
-			matrix R = new matrix(count_f, count_f);
+			
+			matrix A_prod = A.T*A;
+			matrix R2 = new matrix(A_prod.size2, A_prod.size2);
+
 			QRGS.decomp(A, R);
 			vector c = QRGS.solve(A, R, b);
-			
-			return c;
+
+			QRGS.decomp(A_prod, R2);
+			matrix Co = QRGS.inverse(A_prod, R2);
+
+			vector c_errors = new vector(Co.size2);
+			for(int g=0;g<Co.size2;g++){
+				c_errors[g] = Math.Sqrt(Co[g,g]);
+			}
+
+			return (c, Co, c_errors);
 		}
 	}
 
 
 	static void Main(string[] args){
 		// TASK A
-		//WriteLine("TASK A");
 
 		//random tall
 		var random = new Random();
@@ -118,7 +126,10 @@ class main{
 			ln_y[i] = Log(y[i]);
 			ln_dy[i] = dy[i]/y[i];
 		}
-		vector bf = ls.lsfit(fs, t, ln_y, ln_dy);
+		var fit_params = ls.lsfit(fs, t, ln_y, ln_dy);
+		vector bf = fit_params.Item1;
+		vector c_errors = fit_params.Item3;
+
 		double c_a = Math.Exp(bf[0]);
 		double c_lamda = -bf[1];
 
@@ -160,8 +171,19 @@ class main{
 				double deviation = 100*((val_exp-val_theory)/val_theory);
 			       	WriteLine($"Experimental half-life: {val_exp}");
 				WriteLine($"Theoretical half-life: {val_theory}");
-				WriteLine($"Deviation from theory: {deviation} %");	
-			}
+				WriteLine($"Deviation from theory: {deviation} %");
+				WriteLine("");
+
+				//Use error-propagation to find uncertainty of half-life
+				WriteLine("Comparision of half-life including uncertainties");
+				double error_life = (Math.Log(2.0)/(c_lamda*c_lamda))*c_errors[1];
+				WriteLine($"Experimental half-life: {val_exp} +- {error_life}");
+				WriteLine($"Theoretical half-life: {val_theory}");
+				if(val_exp-error_life<=val_theory && val_theory<=val_exp+error_life){
+					WriteLine("Experiemental value agrees with theory.");
+				}
+				else{WriteLine("Experimental values does not agree with theory.");}
+			}	
 		}
 	}
 }

@@ -6,3 +6,8 @@ Comparison of half-life
 Experimental half-life: 4.08004641904341
 Theoretical half-life: 3.631
 Deviation from theory: 12.3670178750595 %
+
+Comparision of half-life including uncertainties
+Experimental half-life: 4.08004641904341 +- 0.166914715082983
+Theoretical half-life: 3.631
+Experimental values does not agree with theory.
