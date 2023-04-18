@@ -1,0 +1,4 @@
+Checking integration method
+Correct answers: 2/3	2	3.14159265358979	-4
+Calculated results: 0.666953909054655	1.99996150007805	3.14183457802727	-3.99991705899915
+All results are within uncertainties.

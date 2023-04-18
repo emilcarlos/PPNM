@@ -1,0 +1,13 @@
+set terminal svg background "white"
+set key bottom right
+set output "error.svg"
+set xlabel "x"
+set ylabel "y"
+set tics out
+set xzeroaxis
+set yzeroaxis
+set samples 800
+set title "Error function"
+plot [-5:5][-1.5:1.5] \
+ "error.data" with lines linetype 1 title "error function" \
+,"table.hardcode" with points pointtype 4 title "table values" \
