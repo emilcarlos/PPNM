@@ -8,5 +8,5 @@ set xzeroaxis
 set yzeroaxis
 set samples 800
 set title "u'' = u'*u"
-plot [0:10][-1.5:1.5] \
+plot [0:100][0:150] \
  "test.data" with lines linetype 1 title "Airy function" \
