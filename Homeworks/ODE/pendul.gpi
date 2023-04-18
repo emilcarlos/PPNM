@@ -8,5 +8,5 @@ set xzeroaxis
 set yzeroaxis
 set samples 800
 set title "u'' = -0.25*u'-5*sin(u)"
-plot [0:10][-1.5:1.5] \
+plot [0:10][-3.5:3.5] \
  "pendul.data" with lines linetype 1 title "pendulum function" \

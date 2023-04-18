@@ -61,7 +61,7 @@ public static class main{
 	}
 
 	static vector test(double x, vector y){
-		return new vector(y[1], y[0]*y[1]);
+		return new vector(y[1], -10*y[0]-0.2*y[1]);
 	}
 
 	static vector pendul(double x, vector y){
@@ -77,14 +77,14 @@ public static class main{
 			simple_record.WriteLine($"{xlist[i]} {ylist[i][0]} {ylist[i][1]}");
 		}
 		
-		vector test_y = new vector(1, 2);
-		(var test_xlist, var test_ylist) = driver(test, 0, test_y, 1);
+		vector test_y = new vector(1, 1);
+		(var test_xlist, var test_ylist) = driver(test, 0, test_y, 10);
 		var test_record = new StreamWriter("test.data");
 		for(int i=0;i<test_xlist.size;i++){
 			test_record.WriteLine($"{test_xlist[i]} {test_ylist[i][0]} {test_ylist[i][1]}");
 		}
 
-		vector pendul_y = new vector (Math.PI*0.95, 0);
+		vector pendul_y = new vector (Math.PI-0.1, 0);
 		(var pxlist, var pylist) = driver(pendul, 0, pendul_y, 10);
 		var pendul_record = new StreamWriter("pendul.data");
 		for(int i=0; i<pxlist.size;i++){

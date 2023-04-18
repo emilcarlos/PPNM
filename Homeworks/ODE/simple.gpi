@@ -9,4 +9,4 @@ set yzeroaxis
 set samples 800
 set title "u'' = -u'"
 plot [0:10][-1.5:1.5] \
- "simple.data" with lines linetype 1 title "simple function" \
+ "simple.data" with lines linetype 1 title "harmonic movement" \

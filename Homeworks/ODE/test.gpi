@@ -7,6 +7,6 @@ set tics in
 set xzeroaxis
 set yzeroaxis
 set samples 800
-set title "u'' = u'*u"
-plot [0:100][0:150] \
- "test.data" with lines linetype 1 title "Airy function" \
+set title "u'' = -10*u - 0.2*u'"
+plot [0:10][-2:2] \
+ "test.data" with lines linetype 1 title "Damped harminoic movement" \
