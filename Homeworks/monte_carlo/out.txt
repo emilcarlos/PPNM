@@ -1,0 +1,8 @@
+--------------------------------------
+Half unit sphere
+Actual value:	2.0943951023932
+Calculated value with 100000 points:	2.09416367287582 ± 0.00434748907331694
+---------------------------------------
+Difficult integral from task description
+Actual value:	1.3932039296856768591842462603255
+Calculated value with 1000000 points:	1.40312433644377 ± 0.00962664995113714

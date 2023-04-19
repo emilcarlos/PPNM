@@ -1,0 +1,14 @@
+set terminal svg background "white"
+set key top right
+set output "figure.svg"
+set xlabel "N"
+set ylabel "error"
+set tics in
+set xzeroaxis
+set yzeroaxis
+set samples 800
+set title "Deviation of Monte Carlo simulation compared to estimated error"
+plot [0:3000][0:1] \
+ "mc.data" with points pointtype 7 pointsize 0.5 title "estimated error" \
+, "actual.data" with points pointtype 7 pointsize 0.5 title "actual deviation"\
+, "nth.data" with lines linetype 1 linewidth 2.5 linecolor "black" title "1/sqrt(N)"
