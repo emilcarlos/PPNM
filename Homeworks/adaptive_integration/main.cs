@@ -36,8 +36,17 @@ public class main{
 	static double func2(double x){return 1/Math.Sqrt(x);}
 	static double func3(double x){return 4*Math.Sqrt(1-x*x);}
 	static double func4(double x){return Math.Log(x)/Math.Sqrt(x);}
-		
-	//error function
+	
+	//old error function
+	static double old_erf(double x){
+	if(x<0) return -erf(-x);
+	double[] a={0.254829592,-0.284496736,1.421413741,-1.453152027,1.061405429};
+	double t=1/(1+0.3275911*x);
+	double sum=t*(a[0]+t*(a[1]+t*(a[2]+t*(a[3]+t*a[4]))));
+	return 1-sum*Exp(-x*x);
+	}
+
+	//new error function
 	static double helper1(double x){return Math.Exp(-x*x);}
 	public static Func<double,double> helper2(double z){
 		return (x) => {return Math.Exp(-(z+(1-x)/x)*(z+(1-x)/x))/x/x;};
@@ -76,6 +85,21 @@ public class main{
 
 		for(double x=-5+1.0/128;x<=5;x+=1.0/64){
 			error_data.WriteLine($"{x} {erf(x)}");
+		}
+
+		//comparing accuracy of new error function with old error function
+		double[] z_values = {0.1, 0.2, 0.5, 1.0, 2.0};
+		double[] table_values = {0.112462916, 0.222702589, 0.520499878, 0.842700793, 0.995322265};
+		var new_err = new genlist<double>();
+		var old_err = new genlist<double>();
+		for(int i=0;i<z_values.Length;i++){
+			new_err.add(Math.Abs(erf(z_values[i]) - table_values[i]));
+			old_err.add(Math.Abs(old_erf(z_values[i]) - table_values[i]));
+		}
+		WriteLine("Comparison between new error function and old error function from plot-exercise.");
+		WriteLine($"x-value	table-value	new deviation	old deviation");
+		for(int i=0;i<z_values.Length;i++){
+			WriteLine($"{z_values[i]}	{table_values[i]}	{new_err[i]}	{old_err[i]}");
 		}
 	}
 }
