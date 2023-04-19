@@ -12,5 +12,7 @@ This is my repository used to store solutions to exercises and homeworks for the
 | 4  | Splines       | 6 | - | - |  6  |
 ---------------------------------------
 | 5  | ODE           | 6 | - | - |  6  |
+---------------------------------------
+| 6  | MonteCarlo    | 6 | - | - |  6  |
  ======================================
-|                    total points:  36 |
+|                    total points:  42 |
