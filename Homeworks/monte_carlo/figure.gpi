@@ -7,7 +7,7 @@ set tics in
 set xzeroaxis
 set yzeroaxis
 set samples 800
-set title "Deviation of Monte Carlo simulation compared to estimated error"
+set title "Deviation of Monte Carlo simulation compared to estimated error (volume of half unit sphere)"
 plot [0:3000][0:1] \
  "mc.data" with points pointtype 7 pointsize 0.5 title "estimated error" \
 , "actual.data" with points pointtype 7 pointsize 0.5 title "actual deviation"\
