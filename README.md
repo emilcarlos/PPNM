@@ -14,5 +14,7 @@ This is my repository used to store solutions to exercises and homeworks for the
 | 5  | ODE           | 6 | - | - |  6  |
 ---------------------------------------
 | 6  | Integration   | 6 | - | - |  6  |
+---------------------------------------
+| 6  | MonteCarlo    | 6 | - | - |  6  |
  ======================================
-|                    total points:  42 |
+|                    total points:  48 |
