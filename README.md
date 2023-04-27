@@ -16,5 +16,7 @@ This is my repository used to store solutions to exercises and homeworks for the
 | 6  | Integration   | 6 | - | - |  6  |
 ---------------------------------------
 | 7  | MonteCarlo    | 6 | - | - |  6  |
+---------------------------------------
+| 8  | Rootfinding   | 6 | - | - |  6  |
  ======================================
-|                    total points:  48 |
+|                    total points:  54 |
