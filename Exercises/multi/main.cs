@@ -25,6 +25,7 @@ public static class start{
 			x[i] = new data();
 			x[i].a = 1 + nterms/nthreads*i;
 			x[i].b = 1 + nterms/nthreads*(i+1);
+			WriteLine($"i = {i}, a = {x[i].a}, s = {x[i].b}");
 		}
 		x[x.Length-1].b=nterms+1;
 

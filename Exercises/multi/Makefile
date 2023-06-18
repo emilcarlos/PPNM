@@ -1,4 +1,4 @@
-N=300000000
+N=500000000
 TIME = time --portability --append --output $@
 Out.txt : main.exe Makefile
 	>$@
