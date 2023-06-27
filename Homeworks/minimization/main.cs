@@ -11,18 +11,19 @@ public class main{
 		vector grad = new vector(x.size);
 		for(int i=0;i<x.size;i++){
 			vector stepped = x.copy();
-			double step = Math.Pow(2, -26);
-			if(x[i] != 0){step = Math.Abs(x[i])*Math.Pow(2,-26);}
+			double step = 1e-7;
+			if(x[i] != 0){step = Math.Abs(x[i])*1e-7;}
 			stepped[i] = x[i]+step;
 			grad[i] = (f(stepped)-f(x))/step;
 		}
 		return grad;
 	}
 
-	public static vector qnewton(Func<vector,double> f, vector x, double acc, double eps){
+	public static (vector, int) qnewton(Func<vector,double> f, vector x, double acc, double eps){
 		matrix B = new matrix(x.size, x.size);
 		B.set_unity();
 		vector grad = gradient(f, x);
+		int step_counter = 0;
 		while(grad.norm() > acc){
 			grad = gradient(f, x);
 			vector step = -B*grad;
@@ -43,17 +44,19 @@ public class main{
 						matrix B_step = uut/(u.dot(y));
 						B = B + B_step;
 					}
+					step_counter = step_counter + 1;
 					break;
 				}
 				lambda = lambda*0.5;
-				if(lambda < 1.0/1024){
+				if(lambda < Math.Pow(2,-25)){
 					x = x + (lambda *step);
 					B.set_unity();
+					step_counter = step_counter + 1;
 					break;
 				}
 			}
 		}
-		return x;
+		return (x, step_counter);
 	}
 
 	static double rosen(vector x){
@@ -65,11 +68,23 @@ public class main{
 	}
 
 	static void Main(){
-		vector start = new vector(3,3);
-		vector mini = qnewton(rosen, start, 1e-2, 1e-10);
-		mini.print();
-		start = new vector(25,25);
-		mini = qnewton(himmel, start, 1e-2, 1e-10);
-		mini.print();
+		var random = new Random();
+		int x = random.Next(-10,10);
+		int y = random.Next(-10,10);
+		vector start = new vector(x,y);
+		vector mini = qnewton(rosen, start, 1e-2, 1e-10).Item1;
+		int rosen_step = qnewton(rosen, start, 1e-2, 1e-10).Item2;
+		WriteLine($"\nMinimum for Rosenbrock's Valley function found in {rosen_step} steps:");
+		WriteLine($"x = {mini[0]}, y = {mini[1]}");
+		WriteLine($"(starting point: x = {x}, y = {y})");
+
+		x = random.Next(-100,100);
+		y = random.Next(-100,100);
+		start = new vector(x,y);
+		mini = qnewton(himmel, start, 1e-2, 1e-10).Item1;
+		int himmel_step = qnewton(himmel, start, 1e-2, 1e-10).Item2;
+		WriteLine($"\nMinimum for Himmelblau's Function found in {himmel_step} steps:");
+		WriteLine($"x = {mini[0]}, y = {mini[1]}");
+		WriteLine($"(starting point: x = {x}, y = {y})");
 	}	
 }

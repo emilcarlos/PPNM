@@ -1,2 +1,8 @@
-       NaN        NaN 
-     -2.81       3.13 
+
+Minimum for Rosenbrock's Valley function found in 50 steps:
+x = 0.999971650484888, y = 0.999943217781949
+(starting point: x = 3, y = -8)
+
+Minimum for Himmelblau's Function found in 14 steps:
+x = 3.58442815180588, y = -1.8481265684858
+(starting point: x = -69, y = 69)

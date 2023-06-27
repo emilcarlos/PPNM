@@ -4,6 +4,19 @@ using static System.Math;
 using static System.Random;
 
 class main{
+	public class genlist<T>{
+	public T[] data;
+	public int size => data.Length; // property
+	public T this[int i] => data[i]; // indexer
+	public genlist(){ data = new T[0]; }
+	public void add(T item){ /* add item to the list */
+		T[] newdata = new T[size+1];
+		System.Array.Copy(data,newdata,size);
+		newdata[size]=item;
+		data=newdata;
+	}
+	}
+
 	public static class funcs{
 		// Decomp function
 		public static void decomp(matrix a, matrix r){
@@ -51,9 +64,9 @@ class main{
 		}
 		
 		// Binary search in 1 dimension
-		public static int binsearch(double[] x, double z){ 
-		if(!(x[0]<=z && z<=x[x.Length-1])) throw new Exception("binsearch: bad z");
-		int i=0, j=x.Length-1;
+		public static int binsearch(vector x, double z){ 
+		if(!(x[0]<=z && z<=x[x.size-1])) throw new Exception("binsearch: bad z");
+		int i=0, j=x.size-1;
 		while(j-i>1){
 			int mid=(i+j)/2;
 			if(z>x[mid]) i=mid; else j=mid;
@@ -62,7 +75,7 @@ class main{
 		}
 
 		// Binary search for matrix index in 2 dimensions
-		public static int[] doublesearch(double[] x, double[] y, double px, double py){
+		public static int[] doublesearch(vector x, vector y, double px, double py){
 			int x_index = funcs.binsearch(x, px);
 			int y_index = funcs.binsearch(y, py);
 			int[] index = {y_index, x_index};
@@ -70,7 +83,7 @@ class main{
 		}
 
 		// Bi-linear interpolation
-		public static double bilinear(double[] x, double[] y, matrix F, double px, double py){
+		public static double bilinear(vector x, vector y, matrix F, double px, double py){
 			int [] index = doublesearch(x, y, px, py);
 			int i = index[0];
 			int j = index[1];
@@ -96,18 +109,63 @@ class main{
 				
 	}
 	
-	static void Main(){
-		WriteLine("Start of output file");
-		matrix F = new matrix(4,4);
-		F[0,0]=1; F[0,1]=1; F[0,2]=1; F[0,3]=1;
-		F[1,0]=1; F[1,1]=1; F[1,2]=2; F[1,3]=1;
-		F[2,0]=1; F[2,1]=5; F[2,2]=3; F[2,3]=1;
-		F[3,0]=1; F[3,1]=1; F[3,2]=1; F[3,3]=1;
-		double[] x = {0,1,2,3};
-		double[] y = {0,1,2,3};
-		double px = 2.3;
-		double py = 0.3;
-		double check = funcs.bilinear(x, y, F, px, py);
-		WriteLine(check);
+	static void Main(string[] args){
+		//random matrix as grid
+		var random = new Random();
+		//int random_n = random.Next(2,20);
+		//int random_m = random.Next(2,20);
+		int random_n = 9;
+		int random_m = 9;
+		matrix random_a = new matrix(random_n, random_m);
+		for(int i=0;i<random_n;i++){
+			for(int j=0;j<random_m;j++){
+				random_a[i,j] = random.NextDouble();
+			}
+		}
+		//random_a.print("Test matrix");
+
+		//coordinate vectors
+		vector tx = new vector(random_m);
+		vector ty = new vector(random_n);
+		for(int i=0;i<random_m;i++){tx[i] = i;}
+		for(int i=0;i<random_n;i++){ty[i] = i;}
+
+		//random point in grid
+		double tpx = random.Next(2,random_m-1) + 0.01*random.Next(2,100);
+		double tpy = random.Next(2,random_n-1) + 0.01*random.Next(2,100);
+		//WriteLine($"px = {tpx}, py = {tpy}");
+
+		//calculates interpolated value for point
+		double check2 = funcs.bilinear(tx, ty, random_a, tpx, tpy);
+		//WriteLine($"interpolated value = {check2}");
+		int x1 = (int)Math.Floor(tpx);
+		int x2 = (int)Math.Ceiling(tpx);
+		int y1 = (int)Math.Floor(tpy);
+		int y2 = (int)Math.Ceiling(tpy);
+		//WriteLine($"x1 = {x1}, x2 = {x2}, y1 = {y1}, y2 = {y2}");
+		//WriteLine($"Q11 = {random_a[y1,x1]}, Q12 = {random_a[y2,x1]}, Q21 = {random_a[y1,x2]}, Q22 = {random_a[y2,x2]}");
+
+		//generate plot to check interpolating function
+		foreach(var arg in args){
+		if(arg == "interpolate"){
+			//pass points to interpolate.data
+			for(int xi=1;xi<(random_m-1.02)*50;xi++){
+				double XI = xi*0.02;
+				for(int yi=1;yi<(random_n-1.02)*50;yi++){
+					double YI = yi*0.02;
+					WriteLine($"{XI}\t{YI}\t{funcs.bilinear(tx, ty, random_a, XI, YI)}");
+				}
+				WriteLine("");
+			}
+		}
+		if(arg == "points"){
+			//pass grid points to points.data
+			for(int xi=0;xi<random_m;xi++){
+				for(int yi=0;yi<random_n;yi++){
+					WriteLine($"{tx[xi]}\t{ty[yi]}\t{random_a[yi,xi]}");
+				}
+			}
+		}
+		}
 	}
 }

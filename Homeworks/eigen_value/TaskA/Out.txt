@@ -1,4 +1,4 @@
-A is a 183x183 symmetric matrix.
+A is a 182x182 symmetric matrix.
 V^T*A*V equals D.
 V*D*V^T equals A.
 V^T*V equals identity matrix.

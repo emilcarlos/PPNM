@@ -1,5 +1,8 @@
 DIR = $(HOME)/PPNM/matlib/matrix
 
+All: out.txt
+	cat out.txt
+
 out.txt: main.exe
 	mono $< > $@
 

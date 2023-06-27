@@ -6,15 +6,15 @@ System of linear equations:
 x - 7y = -11
 5x + 2y = -18
 Real solution: x=-4, y=1
-Calculated solution: x=-4, y=1
+Calculated solution: x=-4, y=0.999999999999999
 -------------------------------------------------------
 System of linear equations:
 2x + 5y + 2z = -38
 3x -2y + 4z = 17
 -6x + y - 7z = -12
 Real solution: x=3, y=-8, z=-2
-Calculated solution: x=3.00000000000119, y=-8.00000000000009, z=-2.00000000000101
+Calculated solution: x=3.00000000000072, y=-8.00000000000006, z=-2.00000000000061
 -------------------------------------------------------
 Extremum of Rosenbrockfunction:
 Theoretical global minimum: x=1, y=1
-Calculated extremum: x=1.00001841815342, y=1.00003649626784
+Calculated extremum: x=1.00001728672023, y=1.0000342564557
