@@ -3,7 +3,7 @@ This is my repository used to store solutions to exercises and homeworks for the
 
 | #  | homework      | A | B | C | Σ   |
  ======================================
-| 1  | LinEq         | 6 | 3 | - | 9  |
+| 1  | LinEq         | 6 | 3 | - |  9  |
 ---------------------------------------
 | 2  | EVD           | 6 | - | - |  6  |
 ---------------------------------------
@@ -18,5 +18,9 @@ This is my repository used to store solutions to exercises and homeworks for the
 | 7  | MonteCarlo    | 6 | - | - |  6  |
 ---------------------------------------
 | 8  | Rootfinding   | 6 | - | - |  6  |
+---------------------------------------
+| 9  | Minimum       | 6 | - | - |  6  |
+---------------------------------------
+| 10 | Neural Net    | 6 | - | - |  6  |
  ======================================
-|                    total points:  54 |
+|                    total points:  66 |
