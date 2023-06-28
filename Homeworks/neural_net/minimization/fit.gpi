@@ -1,0 +1,14 @@
+set terminal svg background "white"
+set key top right
+set output "fit.svg"
+set xlabel "x"
+set ylabel "y"
+set tics in
+set xzeroaxis
+set yzeroaxis
+set samples 800
+set title "Neural Net Fit"
+plot [-1.1:1.1][-1.5:1.5] \
+ "fit.data" with lines linetype 1 title "Neural Net approximation"\
+,"function.data" with lines linetype 1 linecolor "red" title "cos(5*x-1)*exp(-x*x)"\
+,"points.data" with points pointtype 2 linecolor "dark-blue" title "tabulated points"\
