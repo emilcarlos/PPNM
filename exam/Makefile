@@ -2,7 +2,7 @@ DIR = $(HOME)/PPNM/matlib/matrix
 DLLS = $(addprefix -reference:,$(filter %.dll,$^))
 CODE = $(filter %.cs,$^)
 
-All: wiki.svg line.svg interpolate.svg test.txt Read_Me.txt 
+All: wiki.svg line.svg interpolate.svg test.txt 
 
 wiki.svg : wiki.gpi wiki.data
 	gnuplot $<
