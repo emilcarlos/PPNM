@@ -1,7 +1,6 @@
 set terminal svg background "white"
 set key top right
 set output "wiki.svg"
-#set palette rgbformulae 33,13,10
 set palette defined ( 0 '#000090',\
                       1 '#000fff',\
                       2 '#0090ff',\
@@ -31,4 +30,5 @@ set ylabel "y"
 set zlabel "z"
 
 # Make pm3d plot
+set title "Recreation of plot from https://en.wikipedia.org/wiki/Bilinear_interpolation"
 splot w using xcol:ycol:zcol with pm3d notitle

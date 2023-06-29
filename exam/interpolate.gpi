@@ -24,6 +24,8 @@ set ylabel "y"
 set zlabel "z"
 
 # Make pm3d plot
+set title "interpolation of grid"
 splot interpolate using xcol:ycol:zcol with pm3d notitle
 
+set title "plot of grid points"
 splot grid using xcol:ycol:zcol with points notitle  
