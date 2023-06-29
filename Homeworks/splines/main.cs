@@ -46,17 +46,6 @@ class main{
 		}
 	}
 
-	public class qspline{
-	double[] x,y,b,c;
-	public qspline(double[] xs,double[] ys){
-		/* x=xs.copy(); y=ys.copy(); calculate b and c */
-		}
-	public double evaluate(double z){/* evaluate the spline */}
-	public double derivative(double z){/* evaluate the derivative */}
-	public double integral(double z){/* evaluate the integral */}
-	}
-
-
 
 	static void Main(string[] args){
 		double[] xs = {0,1,3,4,6,7,9,10,14};
@@ -84,11 +73,6 @@ class main{
                                 WriteLine($"{z} {funcs.linterpInteg(xs, ys, z)}");
                         }	
 		}
-
-		if(arg == "quad"){
-			//Task B with quadratic splines
-		}
-
 		}
 	}
 }
