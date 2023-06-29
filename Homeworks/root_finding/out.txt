@@ -13,8 +13,8 @@ System of linear equations:
 3x -2y + 4z = 17
 -6x + y - 7z = -12
 Real solution: x=3, y=-8, z=-2
-Calculated solution: x=3.00000000000072, y=-8.00000000000006, z=-2.00000000000061
+Calculated solution: x=3.00000000000095, y=-8.00000000000007, z=-2.0000000000008
 -------------------------------------------------------
 Extremum of Rosenbrockfunction:
 Theoretical global minimum: x=1, y=1
-Calculated extremum: x=1.00001728672023, y=1.0000342564557
+Calculated extremum: x=1.00000774856609, y=1.00001536867676

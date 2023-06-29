@@ -1,8 +1,8 @@
 
-Minimum for Rosenbrock's Valley function found in 50 steps:
-x = 0.999971650484888, y = 0.999943217781949
-(starting point: x = 3, y = -8)
+Minimum for Rosenbrock's Valley function found in 64 steps:
+x = 1.00129031500594, y = 1.00259287178238
+(starting point: x = 6, y = -1)
 
-Minimum for Himmelblau's Function found in 14 steps:
-x = 3.58442815180588, y = -1.8481265684858
-(starting point: x = -69, y = 69)
+Minimum for Himmelblau's Function found in 20 steps:
+x = 3.58442816499414, y = -1.84812656405999
+(starting point: x = 86, y = 45)
