@@ -2,18 +2,32 @@ DIR = $(HOME)/PPNM/matlib/matrix
 DLLS = $(addprefix -reference:,$(filter %.dll,$^))
 CODE = $(filter %.cs,$^)
 
-interpolate.svg : interpolate.gpi interpolate.data points.data
+All: wiki.svg line.svg interpolate.svg test.txt Read_Me.txt 
+
+wiki.svg : wiki.gpi wiki.data
 	gnuplot $<
 
-Out.txt: main.exe
-	mono main.exe > Out.txt
+line.svg : line.gpi line_inter.data
+	gnuplot $<
+
+interpolate.svg : interpolate.gpi interpolate.data
+	gnuplot $<
+
+Read_Me.txt: main.exe
+	mono main.exe > Read_Me.txt
+
+wiki.data : main.exe
+	mono $< wiki > $@
+
+line_inter.data : main.exe
+	mono $< line_interpolation > $@
+
 
 interpolate.data : main.exe
 	mono $< interpolate > $@
 
-points.data : main.exe
-	mono $< points > $@
-
+test.txt : main.exe
+	mono $< test > $@
 
 matrix.dll : $(DIR)/vector.cs $(DIR)/matrix.cs
 	mcs -target:library -out:./matrix.dll $^

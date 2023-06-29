@@ -2,21 +2,10 @@ using System;
 using static System.Console;
 using static System.Math;
 using static System.Random;
+using System.IO;
+using static System.IO.TextWriter;
 
 class main{
-	public class genlist<T>{
-	public T[] data;
-	public int size => data.Length; // property
-	public T this[int i] => data[i]; // indexer
-	public genlist(){ data = new T[0]; }
-	public void add(T item){ /* add item to the list */
-		T[] newdata = new T[size+1];
-		System.Array.Copy(data,newdata,size);
-		newdata[size]=item;
-		data=newdata;
-	}
-	}
-
 	public static class funcs{
 		// Decomp function
 		public static void decomp(matrix a, matrix r){
@@ -41,26 +30,6 @@ class main{
 				x[i] = (x[i]-sum)/R[i,i];
 			}
 			return x;
-		}
-		
-		// Determinant function
-		public static double det(matrix R){
-			double prod = 1.0;
-			for(int i=0;i<R.size1;i++){
-				prod = prod * R[i,i];
-			}
-			return prod;
-		}
-
-		// Inverse function
-		public static matrix inverse(matrix Q, matrix R){
-			matrix B = new matrix(Q.size1, Q.size2);
-			for(int i=0;i<Q.size2;i++){
-				vector ei = new vector(Q.size2);
-				ei[i] = 1;
-				B[i] = funcs.solve(Q, R, ei);
-			}
-			return B;
 		}
 		
 		// Binary search in 1 dimension
@@ -112,60 +81,121 @@ class main{
 	static void Main(string[] args){
 		//random matrix as grid
 		var random = new Random();
-		//int random_n = random.Next(2,20);
-		//int random_m = random.Next(2,20);
-		int random_n = 9;
-		int random_m = 9;
+		int random_n = random.Next(4,12);
+		int random_m = random.Next(4,12);
 		matrix random_a = new matrix(random_n, random_m);
+		double upper_value = 5.0;
+		double lower_value = -5.0;
 		for(int i=0;i<random_n;i++){
 			for(int j=0;j<random_m;j++){
-				random_a[i,j] = random.NextDouble();
+				random_a[i,j] = random.NextDouble()*(upper_value-lower_value) + lower_value;
 			}
 		}
-		//random_a.print("Test matrix");
 
 		//coordinate vectors
-		vector tx = new vector(random_m);
-		vector ty = new vector(random_n);
-		for(int i=0;i<random_m;i++){tx[i] = i;}
-		for(int i=0;i<random_n;i++){ty[i] = i;}
+		vector vtx = new vector(random_m);
+		vector vty = new vector(random_n);
+		int low_x = -6;
+		int high_x = 6;
+		int low_y = -6;
+		int high_y = 6;
+		vtx[0] = low_x;
+		vtx[vtx.size-1] = high_x;
+		vty[0] = low_y;
+		vty[vty.size-1] = high_y;
+		for(int i=1;i<random_m-1;i++){vtx[i] = random.NextDouble()*(high_x-low_x) + low_x;}
+		for(int i=1;i<random_n-1;i++){vty[i] = random.NextDouble()*(high_y-low_y) + low_y;}
+		double[] dtx = vtx;
+		double[] dty = vty;
+		Array.Sort(dtx);
+		Array.Sort(dty);
+		vector tx = new vector(dtx);
+		vector ty = new vector(dty);
 
-		//random point in grid
-		double tpx = random.Next(2,random_m-1) + 0.01*random.Next(2,100);
-		double tpy = random.Next(2,random_n-1) + 0.01*random.Next(2,100);
-		//WriteLine($"px = {tpx}, py = {tpy}");
-
-		//calculates interpolated value for point
-		double check2 = funcs.bilinear(tx, ty, random_a, tpx, tpy);
-		//WriteLine($"interpolated value = {check2}");
-		int x1 = (int)Math.Floor(tpx);
-		int x2 = (int)Math.Ceiling(tpx);
-		int y1 = (int)Math.Floor(tpy);
-		int y2 = (int)Math.Ceiling(tpy);
-		//WriteLine($"x1 = {x1}, x2 = {x2}, y1 = {y1}, y2 = {y2}");
-		//WriteLine($"Q11 = {random_a[y1,x1]}, Q12 = {random_a[y2,x1]}, Q21 = {random_a[y1,x2]}, Q22 = {random_a[y2,x2]}");
-
-		//generate plot to check interpolating function
+		//generate plots and test to check interpolating function
 		foreach(var arg in args){
+
+		// generates interpolation and plots it as a surface-plot
 		if(arg == "interpolate"){
-			//pass points to interpolate.data
-			for(int xi=1;xi<(random_m-1.02)*50;xi++){
-				double XI = xi*0.02;
-				for(int yi=1;yi<(random_n-1.02)*50;yi++){
-					double YI = yi*0.02;
-					WriteLine($"{XI}\t{YI}\t{funcs.bilinear(tx, ty, random_a, XI, YI)}");
+			var interpolate = new StreamWriter("interpolate.data");
+			for(int xi=low_x*25;xi<high_x*25;xi++){
+				double XI = xi*0.04;
+				for(int yi=low_y*25;yi<high_y*25;yi++){
+					double YI = yi*0.04;
+					interpolate.WriteLine($"{XI}\t{YI}\t{funcs.bilinear(tx, ty, random_a, XI, YI)}");
 				}
-				WriteLine("");
+				interpolate.WriteLine("");
 			}
-		}
-		if(arg == "points"){
-			//pass grid points to points.data
+			interpolate.Close();
+			var points = new StreamWriter("points.data");
 			for(int xi=0;xi<random_m;xi++){
-				for(int yi=0;yi<random_n;yi++){
-					WriteLine($"{tx[xi]}\t{ty[yi]}\t{random_a[yi,xi]}");
-				}
+                                for(int yi=0;yi<random_n;yi++){
+                                        points.WriteLine($"{tx[xi]}\t{ty[yi]}\t{random_a[yi,xi]}");
+                                }
+                                points.WriteLine("");
 			}
+			points.Close();
 		}
+
+		// tests interpolation on an example with a known solution
+		if(arg == "test"){
+			matrix test_matrix = new matrix(8, 8);
+                	for(int i=0;i<8;i++){
+                        	for(int j=0;j<8;j++){
+                                	test_matrix[i,j] = i*j;
+                        	}
+                	}
+			test_matrix.print("test_matrix");
+			vector test_x = new vector("0, 0.5, 1.5, 3, 3.4, 5, 6, 7");
+                	vector test_y = new vector("0.5, 2, 3, 4.5, 5, 6, 6.7, 7");
+			double test_px = 3.3;
+			double test_py = 3.3;
+			WriteLine($"px = {test_px}, py = {test_py}");
+			double test = funcs.bilinear(test_x, test_y, test_matrix, test_px, test_py);
+			WriteLine($"x1 = 3, x2 = 3.4, y1 = 3, y2 = 4.5");
+			test_x.print("x: ");
+			test_y.print("y: ");
+                	WriteLine($"Q11 = {test_matrix[2,3]}, Q12 = {test_matrix[3,3]}, Q21 = {test_matrix[2,4]}, Q22 = {test_matrix[3,4]}");
+			WriteLine("Expected value: 8.25");
+			WriteLine($"Interpolated value: {test}");
+		}
+
+		// tests interpolation along one of the gridlines specified by a constant y-value
+		if(arg == "line_interpolation"){
+			var line_inter = new StreamWriter("line_inter.data");
+			var line_points = new StreamWriter("line_points.data");
+			double YI = ty[random_n-3];
+			for(int xi=0;xi<random_m;xi++){
+				line_inter.WriteLine($"{tx[xi]}\t{funcs.bilinear(tx, ty, random_a, tx[xi], YI)}");
+			}
+			line_inter.Close();
+
+			for(int xi=0;xi<random_m;xi++){
+                                line_points.WriteLine($"{tx[xi]}\t{random_a[random_n-3,xi]}");
+                        }
+			line_points.Close();
+		}
+		
+		// recreates the plot found in https://en.wikipedia.org/wiki/Bilinear_interpolation
+		if(arg == "wiki"){
+			var wiki = new StreamWriter("wiki.data");
+			matrix F = new matrix(2,2);
+			F[0,0] = 0.0;
+			F[0,1] = 1.0;
+			F[1,0] = 1.0;
+			F[1,1] = 0.5;
+			vector x = new vector("0,1");
+			vector y = new vector("0,1");
+			for(int xi=0*100;xi<1*100;xi++){
+				double XI = xi*0.01;
+                                for(int yi=0*100;yi<1*100;yi++){
+                                        double YI = yi*0.01;
+                                        wiki.WriteLine($"{XI}\t{YI}\t{funcs.bilinear(x, y, F, XI, YI)}");
+                                }
+                                wiki.WriteLine("");
+			}
+			wiki.Close();
 		}
 	}
+}
 }

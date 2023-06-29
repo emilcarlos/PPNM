@@ -1,0 +1,13 @@
+set terminal svg background "white"
+set key top right
+set output "line.svg"
+set xlabel "x"
+set ylabel "interpolation value"
+set tics in
+set xzeroaxis
+set yzeroaxis
+set samples 800
+set title "Interpolation along constant y-value"
+plot [-6:6][-5:5] \
+ "line_inter.data" with lines linetype 1 title "interpolation" \
+,"line_points.data" with points pointtype 2 title "points"\
