@@ -8,7 +8,8 @@ main.exe : main.cs vec.dll
 	mcs -target:exe -out:main.exe -reference:vec.dll vec.cs main.cs
 
 
-
+clean: 
+	rm -rf *.txt *.exe
 
 
 
